@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script>
+  function setCookie(cname, value, expiration) {
+    var date = new Date();
+    date.setTime(date.getTime() + (expiration * 24 * 60 * 60 * 1000));
+    var xDate = "expires="+date.toUTCString();
+    document.cookie = cname + "=" + value + ";" + xDate+ ";path=/";
+  }
+  function getCookie(cname) {
+    var name = cname+"=";
+    <!--creates a list of each section of the cookie-->
+    var list = document.cookie.split(';');
+    for (var i = 0; i< list.length;i++) {
+      <!--goes through the list to find the section where the name is-->
+      <!--this means the cookie does not necessarily have to the name be the first or second part-->
+      var current = list[i];
+      <!--removes whitespace-->
+      while(current.charAt(0)==' '){
+        current=current.substring(1);
+      }
+      <!--returns the stored name in the cookie document-->
+      if (current.indexOf(name)==0) {
+        return current.substring(name.length,current.length);
+      }
+      <!--returns nothing if name isnt found-->
+      return "";
+    }
+  }
+  function checkCookie() {
+    var user = getCookie("username");
+    <!--if there is already a user cookie stored-->
+    if (user != ""){
+      alert("Welcome again " + user);
+    }
+    else {
+      <!--asks for a name to store in the cookie-->
+      user = prompt("Please enter your name:", "");
+      <!--checks if the input was valid-->
+      if (user != "" && user != null) {
+        <!--sets a cookie with the name of the part being stored so you know what to reference when trying to get the stored value-->
+        <!--e.g. getCookie() in this example will scan the text of the cookie for the username section and return the value-->
+        <!--stores the user inputted value-->
+        <!--sets the expiration of the cookie to a year-->
+        setCookie("username", user, 365);
+      }
+    }
+  }
+</script>
+<body onload="checkCookie()">
+<p>IS 117-004</p>
+</body>
+<footer>
+  <p>&copy; Jeffrey Zhang 4/11/20</p>
+</footer>
+</html>
